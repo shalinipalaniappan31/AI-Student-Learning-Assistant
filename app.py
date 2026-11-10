@@ -11,9 +11,16 @@ load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 ai_client = genai.Client(api_key=api_key)
 
-client = MongoClient("mongodb://localhost:27017/")
+mongo_uri = os.getenv("MONGO_URI")
+
+client = MongoClient(mongo_uri)
+
 db = client["ai_student_assistant"]
 
+chat_collection = db["chat_history"]
+quiz_collection = db["quiz_results"]
+
+print("MongoDB Atlas connected!")
 chat_collection = db["chat_history"]
 quiz_collection = db["quiz_results"]
 
@@ -21,10 +28,7 @@ print("MongoDB connected!")
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv(
-    "FLASK_SECRET_KEY",
-    "student-assistant-secret-key"
-)
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 def get_ai_answer(question):
     try:
 
