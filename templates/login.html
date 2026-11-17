@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Welcome | Typhoon AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+            padding: 40px 35px;
+            text-align: center;
+            background: rgba(12, 5, 27, 0.82);
+            border: 1px solid var(--border-bright);
+            border-radius: 25px;
+            box-shadow: 0 0 45px rgba(124, 58, 237, 0.22);
+            backdrop-filter: blur(15px);
+        }
+
+        .login-logo {
+            width: 125px;
+            height: 125px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px #a855f7);
+        }
+
+        .login-card h1 {
+            font-size: 30px;
+            margin: 12px 0 8px;
+        }
+
+        .login-card .subtitle {
+            color: var(--text-soft);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .login-card h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .login-form {
+            text-align: left;
+            margin-top: 25px;
+        }
+
+        .login-form label {
+            display: block;
+            margin: 17px 0 8px;
+            font-size: 13px;
+            color: var(--text-soft);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(5, 2, 13, 0.9);
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .login-form input:focus {
+            border-color: var(--purple-bright);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+        }
+
+        .login-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(100deg, #7c3aed, #a855f7);
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.45);
+        }
+
+        .login-footer {
+            margin-top: 25px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .login-footer span {
+            color: var(--purple-bright);
+        }
+
+        @media(max-width: 480px) {
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            .login-logo {
+                width: 105px;
+                height: 105px;
+            }
+
+            .login-card h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="space-background">
+        <div class="space-cloud cloud-purple-1"></div>
+        <div class="space-cloud cloud-purple-2"></div>
+        <div class="space-cloud cloud-blue"></div>
+
+        <div class="star-field">
+            <span class="star s1"></span>
+            <span class="star s4"></span>
+            <span class="star s9"></span>
+            <span class="star s16"></span>
+            <span class="star s22"></span>
+            <span class="star s29"></span>
+        </div>
+    </div>
+
+    <main class="login-page">
+
+        <section class="login-card">
+
+            <img
+                src="{{ url_for('static', filename='images/typhoon.png') }}"
+                alt="Typhoon Mascot"
+                class="login-logo"
+            >
+
+            <h1>Typhoon</h1>
+
+            <p class="subtitle">
+                Your AI-Powered Learning Companion
+            </p>
+
+            <h2>Welcome Back!</h2>
+
+            <p class="subtitle">
+                Sign in and continue your learning journey.
+            </p>
+
+            <form method="POST" action="/" class="login-form">
+
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="login-button">
+                    Sign In →
+                </button>
+
+            </form>
+
+            <p class="login-footer">
+                Powered by <span>Typhoon AI</span>
+            </p>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

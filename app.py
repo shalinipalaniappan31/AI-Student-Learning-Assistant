@@ -67,8 +67,7 @@ def login():
         session["user_email"] = email
         return redirect(url_for("chat"))
         
-    return render_template("log.html")
-
+    return render_template("login.html")
 # =========================
 # MAIN AI CHAT ASSISTANT
 # =========================
