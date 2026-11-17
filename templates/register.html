@@ -14,7 +14,9 @@
     <div class="register-container">
 
         <div class="register-card">
-
+              {% if error %}
+    <p class="error-message">{{ error }}</p>
+{% endif %}
             <h1>Create Your Account</h1>
             <p>Join Typhoon and start your learning journey!</p>
 

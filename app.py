@@ -1,6 +1,6 @@
 import os
 import random
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -15,10 +15,9 @@ ai_client = genai.Client(api_key=api_key)
 mongo_uri = os.getenv("MONGO_URI")
 client = MongoClient(mongo_uri)
 db = client["ai_student_assistant"]
-
+users_collection = db["users"]
 chat_collection = db["chat_history"]
 quiz_collection = db["quiz_results"]
-users_collection = db["users"]
 
 print("MongoDB connected!")
 
@@ -58,21 +57,73 @@ Student's question:
 # =========================
 # LOGIN ROUTE (First Page)
 # =========================
+
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-        
-        # Store user session and redirect to chat space
-        session["user_email"] = email
-        return redirect(url_for("chat"))
-        
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+
+        user = users_collection.find_one({"email": email})
+
+        if user and check_password_hash(user["password"], password):
+            session["user_email"] = user["email"]
+            session["user_name"] = user["name"]
+            return redirect(url_for("chat"))
+
+        return render_template(
+            "login.html",
+            error="Invalid email or password."
+        )
+
     return render_template("login.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+
+        if not name or not email or not password:
+            return render_template(
+                "register.html",
+                error="Please fill in all fields."
+            )
+
+        if len(password) < 8:
+            return render_template(
+                "register.html",
+                error="Password must be at least 8 characters."
+            )
+
+        if password != confirm_password:
+            return render_template(
+                "register.html",
+                error="Passwords do not match."
+            )
+
+        existing_user = users_collection.find_one({"email": email})
+
+        if existing_user:
+            return render_template(
+                "register.html",
+                error="An account with this email already exists."
+            )
+
+        hashed_password = generate_password_hash(password)
+
+        users_collection.insert_one({
+            "name": name,
+            "email": email,
+            "password": hashed_password
+        })
+
+        return redirect(url_for("login"))
+
     return render_template("register.html")
+
 
 # =========================
 # MAIN AI CHAT ASSISTANT

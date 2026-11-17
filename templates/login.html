@@ -161,6 +161,16 @@
             color: #a855f7;
             text-decoration: underline;
         }
+        .login-error {
+    color: #ff6b81;
+    background: rgba(255, 70, 100, 0.1);
+    border: 1px solid rgba(255, 70, 100, 0.3);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 15px;
+    }
     </style>
 </head>
 
@@ -202,7 +212,9 @@
             <p class="subtitle">
                 Sign in and continue your learning journey.
             </p>
-
+            {% if error %}
+    <p class="login-error">{{ error }}</p>
+{% endif %}
             <form method="POST" action="/" class="login-form">
 
                 <label for="email">Email Address</label>
