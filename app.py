@@ -54,19 +54,40 @@ Student's question:
         print("Gemini API Error:", e)
         return "Sorry, I couldn't connect to the AI service right now. Please try again."
 
+# =========================
+# LOGIN ROUTE (First Page)
+# =========================
 @app.route("/", methods=["GET", "POST"])
-def home():
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        
+        # Store user session and go to chat space
+        session["user_email"] = email
+        return redirect(url_for("chat"))
+        
+    return render_template("log.html")
+
+# =========================
+# MAIN AI CHAT ASSISTANT
+# =========================
+@app.route("/chat", methods=["GET", "POST"])
+def chat():
     answer = ""
     if request.method == "POST":
         question = request.form.get("question", "").strip()
 
         if not question:
-            return redirect(url_for("home"))   
+            return redirect(url_for("chat"))   
+        
         answer = get_ai_answer(question)
         chat_collection.insert_one({
+            "email": session.get("user_email"),
             "question": question,
             "answer": answer
         })
+        
     chat_history = list(chat_collection.find())
 
     return render_template(
@@ -78,7 +99,7 @@ def home():
 @app.route("/clear")
 def clear_history():
     chat_collection.delete_many({})
-    return redirect("/")
+    return redirect(url_for("chat"))
 
 @app.route("/dashboard")
 def dashboard():
@@ -100,17 +121,6 @@ def dashboard():
         chat_count=chat_count,
         quiz_attempts=quiz_attempts,
         latest_score=latest_score
-    )
-
-@app.route("/log")
-def learning_log():
-    chats = list(chat_collection.find().sort("_id", -1).limit(10))
-    quizzes = list(quiz_collection.find().sort("_id", -1).limit(10))
-    
-    return render_template(
-        "log.html",
-        chats=chats,
-        quizzes=quizzes
     )
 
 quiz_questions = [
