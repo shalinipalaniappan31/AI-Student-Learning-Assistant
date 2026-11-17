@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Log - Typhoon AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- SPACE BACKGROUND -->
+<div class="space-background">
+    <div class="space-cloud cloud-purple-1"></div>
+    <div class="space-cloud cloud-purple-2"></div>
+    <div class="space-cloud cloud-green"></div>
+    <div class="space-cloud cloud-blue"></div>
+    <div class="star-field">
+        <span class="star s1">✦</span>
+        <span class="star s2">✦</span>
+        <span class="star s3">✦</span>
+        <span class="star s4">✦</span>
+        <span class="star s5">✦</span>
+        <span class="star s6">✦</span>
+        <span class="star s7">✦</span>
+        <span class="star s8">✦</span>
+        <span class="star s9">✦</span>
+        <span class="star s10">✦</span>
+    </div>
+</div>
+
+<div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="{{ url_for('static', filename='images/typhoon.png') }}" alt="Typhoon" class="sidebar-typhoon">
+            <div class="sidebar-title">Typhoon</div>
+            <div class="sidebar-subtitle">AI Learning Assistant</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/" class="sidebar-link">
+                <span class="sidebar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 11.5L12 4l9 7.5"/>
+                        <path d="M5 10v10h14V10"/>
+                        <path d="M9 20v-6h6v6"/>
+                    </svg>
+                </span>
+                <span>Assistant</span>
+            </a>
+
+            <a href="/quiz" class="sidebar-link">
+                <span class="sidebar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="16" rx="3"/>
+                        <path d="M8 9h8"/>
+                        <path d="M8 13h5"/>
+                    </svg>
+                </span>
+                <span>Quiz Mode</span>
+            </a>
+
+            <a href="/dashboard" class="sidebar-link">
+                <span class="sidebar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19V10"/>
+                        <path d="M10 19V5"/>
+                        <path d="M16 19v-7"/>
+                        <path d="M22 19V3"/>
+                    </svg>
+                </span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/log" class="sidebar-link active">
+                <span class="sidebar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </span>
+                <span>Activity Log</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                AI Online
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container">
+            <!-- HEADER -->
+            <div class="ai-header">
+                <div class="typhoon-top-row">
+                    <img src="{{ url_for('static', filename='images/typhoon.png') }}" alt="Typhoon" class="typhoon-main">
+                    <div class="typhoon-message">
+                        Review your complete <br> learning and activity history!
+                    </div>
+                </div>
+                <h1>Learning Activity Log</h1>
+                <div class="ai-status">
+                    <span class="status-dot"></span>
+                    MongoDB Activity Records
+                </div>
+            </div>
+
+            <!-- STATS OVERVIEW CARDS -->
+            <div class="dashboard-cards" style="margin-bottom: 30px;">
+                <div class="dashboard-card">
+                    <h2>Study Streak</h2>
+                    <p>Consecutive Days</p>
+                    <div class="dashboard-number">🔥 14 Days</div>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Learning Time</h2>
+                    <p>Total Time Active</p>
+                    <div class="dashboard-number">⏱️ 18.5 hrs</div>
+                </div>
+                <div class="dashboard-card">
+                    <h2>Activities</h2>
+                    <p>Total Recorded</p>
+                    <div class="dashboard-number">📚 {{ logs|length if logs else 4 }} Sessions</div>
+                </div>
+            </div>
+
+            <!-- LOG LIST FEED -->
+            <div class="dashboard-card" style="padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 15px;">
+                    <h2 style="color: #fff; font-size: 1.2rem;">History Feed</h2>
+                    <span style="background: rgba(99, 179, 237, 0.2); color: #63b3ed; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Recent Activity</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    {% if logs %}
+                        {% for item in logs %}
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(99, 179, 237, 0.2); display: flex; align-items: center; justify-content: center; color: #63b3ed; font-weight: bold;">📌</div>
+                                <div>
+                                    <p style="color: #fff; font-size: 0.95rem; font-weight: 500;">{{ item.title }}</p>
+                                    <p style="color: #a0aec0; font-size: 0.8rem;">{{ item.timestamp }} • {{ item.duration }}</p>
+                                </div>
+                            </div>
+                            <span style="background: rgba(72, 187, 120, 0.2); color: #48bb78; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">{{ item.status }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Fallback Static Items -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(99, 179, 237, 0.2); display: flex; align-items: center; justify-content: center; color: #63b3ed; font-weight: bold;">🤖</div>
+                                <div>
+                                    <p style="color: #fff; font-size: 0.95rem; font-weight: 500;">AI Tutoring Session: Calculus Derivatives</p>
+                                    <p style="color: #a0aec0; font-size: 0.8rem;">Today, 10:30 AM • 25 mins</p>
+                                </div>
+                            </div>
+                            <span style="background: rgba(72, 187, 120, 0.2); color: #48bb78; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Completed</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(66, 153, 225, 0.2); display: flex; align-items: center; justify-content: center; color: #63b3ed; font-weight: bold;">📝</div>
+                                <div>
+                                    <p style="color: #fff; font-size: 0.95rem; font-weight: 500;">Quiz: Python Functions & Scope</p>
+                                    <p style="color: #a0aec0; font-size: 0.8rem;">Yesterday, 4:15 PM • 15 mins</p>
+                                </div>
+                            </div>
+                            <span style="background: rgba(66, 153, 225, 0.2); color: #63b3ed; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Score: 90%</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- NAVIGATION BUTTONS -->
+            <div class="navigation-buttons" style="margin-top: 25px;">
+                <a href="/dashboard">
+                    <button type="button">Back to Dashboard</button>
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

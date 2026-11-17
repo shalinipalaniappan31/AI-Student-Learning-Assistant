@@ -25,12 +25,13 @@
     --radius: 18px;
 }
 
-
 /* =========================================================
    RESET
    ========================================================= */
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -42,181 +43,77 @@ body {
     margin: 0;
     min-height: 100vh;
     min-height: 100dvh;
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color: var(--text-main);
-
     background:
-        radial-gradient(
-            ellipse at 10% 15%,
-            rgba(124, 58, 237, 0.28),
-            transparent 32%
-        ),
-
-        radial-gradient(
-            ellipse at 90% 25%,
-            rgba(168, 85, 247, 0.18),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            ellipse at 55% 100%,
-            rgba(79, 70, 229, 0.24),
-            transparent 38%
-        ),
-
-        linear-gradient(
-            135deg,
-            #030108 0%,
-            #080313 45%,
-            #05020d 100%
-        );
-
+        radial-gradient(ellipse at 10% 15%, rgba(124, 58, 237, 0.28), transparent 32%),
+        radial-gradient(ellipse at 90% 25%, rgba(168, 85, 247, 0.18), transparent 30%),
+        radial-gradient(ellipse at 55% 100%, rgba(79, 70, 229, 0.24), transparent 38%),
+        linear-gradient(135deg, #030108 0%, #080313 45%, #05020d 100%);
     overflow-x: hidden;
 }
 
-
 /* =========================================================
-   SPACE BACKGROUND
+   SPACE BACKGROUND & NEBULA CLOUDS
    ========================================================= */
 
 .space-background {
     position: fixed;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     overflow: hidden;
-
     pointer-events: none;
-
     z-index: 0;
 }
 
-
-/* =========================================================
-   NEBULA CLOUDS
-   ========================================================= */
-
 .space-cloud {
     position: absolute;
-
     border-radius: 50%;
-
     pointer-events: none;
-
     filter: blur(55px);
-
     mix-blend-mode: screen;
 }
-
-
-/* TOP LEFT PURPLE CLOUD */
 
 .cloud-purple-1 {
     width: 650px;
     height: 430px;
-
     left: -160px;
     top: -100px;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(168, 85, 247, 0.48) 0%,
-            rgba(124, 58, 237, 0.25) 38%,
-            transparent 72%
-        );
-
+    background: radial-gradient(ellipse, rgba(168, 85, 247, 0.48) 0%, rgba(124, 58, 237, 0.25) 38%, transparent 72%);
     opacity: 0.9;
-
-    animation:
-        purpleCloudOne 14s ease-in-out infinite alternate;
+    animation: purpleCloudOne 14s ease-in-out infinite alternate;
 }
-
-
-/* BOTTOM RIGHT PURPLE CLOUD */
 
 .cloud-purple-2 {
     width: 720px;
     height: 450px;
-
     right: -180px;
     bottom: -160px;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(168, 85, 247, 0.46) 0%,
-            rgba(124, 58, 237, 0.22) 40%,
-            transparent 72%
-        );
-
+    background: radial-gradient(ellipse, rgba(168, 85, 247, 0.46) 0%, rgba(124, 58, 237, 0.22) 40%, transparent 72%);
     opacity: 0.9;
-
-    animation:
-        purpleCloudTwo 17s ease-in-out infinite alternate;
+    animation: purpleCloudTwo 17s ease-in-out infinite alternate;
 }
-
-
-/* GREEN CLOUD */
 
 .cloud-green {
     width: 450px;
     height: 300px;
-
     right: 8%;
     top: 5%;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(34, 197, 94, 0.20),
-            rgba(16, 185, 129, 0.08),
-            transparent 70%
-        );
-
+    background: radial-gradient(ellipse, rgba(34, 197, 94, 0.20), rgba(16, 185, 129, 0.08), transparent 70%);
     opacity: 0.7;
-
-    animation:
-        greenCloud 16s ease-in-out infinite alternate;
+    animation: greenCloud 16s ease-in-out infinite alternate;
 }
-
-
-/* BLUE / VIOLET CLOUD */
 
 .cloud-blue {
     width: 650px;
     height: 350px;
-
     left: 25%;
     bottom: -180px;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(99, 102, 241, 0.35),
-            rgba(79, 70, 229, 0.15),
-            transparent 70%
-        );
-
+    background: radial-gradient(ellipse, rgba(99, 102, 241, 0.35), rgba(79, 70, 229, 0.15), transparent 70%);
     opacity: 0.8;
-
-    animation:
-        blueCloud 19s ease-in-out infinite alternate;
+    animation: blueCloud 19s ease-in-out infinite alternate;
 }
-
-
-/* =========================================================
-   CLOUD ANIMATIONS
-   ========================================================= */
 
 @keyframes purpleCloudOne {
     0% { transform: translate(0, 0) scale(1); }
@@ -242,7 +139,6 @@ body {
     100% { transform: translate(25px, 10px) scale(0.95); }
 }
 
-
 /* =========================================================
    STAR FIELD & STARS
    ========================================================= */
@@ -265,22 +161,15 @@ body {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.9);
     opacity: 0.45;
-    box-shadow:
-        0 0 4px rgba(255, 255, 255, 0.9),
-        0 0 9px rgba(192, 132, 252, 0.8),
-        0 0 16px rgba(168, 85, 247, 0.45);
-    animation:
-        starFloat 12s ease-in-out infinite,
-        starTwinkle 4s ease-in-out infinite alternate;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 9px rgba(192, 132, 252, 0.8), 0 0 16px rgba(168, 85, 247, 0.45);
+    animation: starFloat 12s ease-in-out infinite, starTwinkle 4s ease-in-out infinite alternate;
 }
 
 .s2, .s5, .s7, .s10, .s12, .s15, .s18, .s21, .s24, .s27, .s30 {
     width: 2px;
     height: 2px;
     opacity: 0.28;
-    box-shadow:
-        0 0 3px rgba(255, 255, 255, 0.7),
-        0 0 7px rgba(168, 85, 247, 0.45);
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.7), 0 0 7px rgba(168, 85, 247, 0.45);
 }
 
 .s4, .s9, .s16, .s22, .s29 {
@@ -288,10 +177,7 @@ body {
     height: 5px;
     opacity: 0.85;
     background: white;
-    box-shadow:
-        0 0 5px white,
-        0 0 12px rgba(216, 180, 254, 1),
-        0 0 24px rgba(168, 85, 247, 0.9);
+    box-shadow: 0 0 5px white, 0 0 12px rgba(216, 180, 254, 1), 0 0 24px rgba(168, 85, 247, 0.9);
     animation-duration: 15s, 3.5s;
 }
 
@@ -328,7 +214,6 @@ body {
 .s8 { left: 72%; top: 18%; }
 .s9 { left: 86%; top: 7%; }
 .s10 { left: 96%; top: 25%; }
-
 .s11 { left: 7%; top: 39%; }
 .s12 { left: 17%; top: 54%; }
 .s13 { left: 28%; top: 42%; }
@@ -338,7 +223,6 @@ body {
 .s17 { left: 68%; top: 57%; }
 .s18 { left: 78%; top: 43%; }
 .s19 { left: 91%; top: 51%; }
-
 .s20 { left: 4%; top: 73%; }
 .s21 { left: 15%; top: 88%; }
 .s22 { left: 26%; top: 76%; }
@@ -366,7 +250,6 @@ body {
     100% { opacity: 0.28; }
 }
 
-
 /* =========================================================
    APP LAYOUT & SIDEBAR (DESKTOP)
    ========================================================= */
@@ -387,19 +270,9 @@ body {
     height: 100vh;
     height: 100dvh;
     padding: 28px 18px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(8, 3, 18, 0.82),
-            rgba(4, 2, 10, 0.9)
-        );
-
+    background: linear-gradient(180deg, rgba(8, 3, 18, 0.82), rgba(4, 2, 10, 0.9));
     border-right: 1px solid rgba(168, 85, 247, 0.38);
-    box-shadow:
-        5px 0 35px rgba(0, 0, 0, 0.45),
-        inset -1px 0 20px rgba(124, 58, 237, 0.04);
-
+    box-shadow: 5px 0 35px rgba(0, 0, 0, 0.45), inset -1px 0 20px rgba(124, 58, 237, 0.04);
     backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
@@ -415,11 +288,7 @@ body {
     width: 100px;
     height: 100px;
     object-fit: contain;
-
-    filter:
-        drop-shadow(0 0 12px rgba(168, 85, 247, 0.85))
-        drop-shadow(0 0 28px rgba(124, 58, 237, 0.4));
-
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.85)) drop-shadow(0 0 28px rgba(124, 58, 237, 0.4));
     animation: sidebarFloat 3s ease-in-out infinite;
 }
 
@@ -463,16 +332,9 @@ body {
 }
 
 .sidebar-link.active {
-    background:
-        linear-gradient(
-            90deg,
-            rgba(124, 58, 237, 0.38),
-            rgba(124, 58, 237, 0.14)
-        );
+    background: linear-gradient(90deg, rgba(124, 58, 237, 0.38), rgba(124, 58, 237, 0.14));
     color: white;
-    box-shadow:
-        inset 3px 0 0 #a855f7,
-        0 0 20px rgba(124, 58, 237, 0.14);
+    box-shadow: inset 3px 0 0 #a855f7, 0 0 20px rgba(124, 58, 237, 0.14);
 }
 
 .sidebar-icon {
@@ -505,7 +367,6 @@ body {
     box-shadow: 0 0 20px rgba(124, 58, 237, 0.08);
 }
 
-
 /* =========================================================
    MAIN CONTENT & CONTAINER
    ========================================================= */
@@ -522,24 +383,14 @@ body {
 .container {
     width: min(1100px, calc(100% - 40px));
     margin: 36px auto;
-    padding: 30px;
+    padding: clamp(16px, 3vw, 30px);
     position: relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(17, 7, 35, 0.58),
-            rgba(5, 2, 13, 0.55)
-        );
-
+    background: linear-gradient(145deg, rgba(17, 7, 35, 0.58), rgba(5, 2, 13, 0.55));
     border: 1px solid rgba(168, 85, 247, 0.42);
     border-radius: 28px;
-    box-shadow:
-        0 0 50px rgba(124, 58, 237, 0.14),
-        inset 0 0 40px rgba(124, 58, 237, 0.025);
+    box-shadow: 0 0 50px rgba(124, 58, 237, 0.14), inset 0 0 40px rgba(124, 58, 237, 0.025);
     backdrop-filter: blur(8px);
 }
-
 
 /* =========================================================
    TYPOGRAPHY
@@ -548,7 +399,7 @@ body {
 h1 {
     margin: 12px 0;
     color: #f8f5ff;
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: clamp(24px, 4vw, 42px);
     font-weight: 800;
     letter-spacing: -1px;
     text-shadow: 0 0 18px rgba(192, 132, 252, 0.4);
@@ -559,20 +410,15 @@ h3 { color: #ddd6fe; }
 p { color: var(--text-soft); }
 a { color: inherit; }
 
-
 /* =========================================================
    TYPHOON MAIN & HEADER
    ========================================================= */
 
 .typhoon-main {
-    width: 135px;
+    width: clamp(85px, 12vw, 135px);
     max-width: 100%;
     object-fit: contain;
-
-    filter:
-        drop-shadow(0 0 12px rgba(192, 132, 252, 0.85))
-        drop-shadow(0 0 30px rgba(124, 58, 237, 0.4));
-
+    filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.85)) drop-shadow(0 0 30px rgba(124, 58, 237, 0.4));
     animation: typhoonFloat 3.5s ease-in-out infinite;
     transition: transform 0.3s ease;
 }
@@ -603,25 +449,14 @@ a { color: inherit; }
     position: relative;
     max-width: 360px;
     padding: 15px 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30, 10, 55, 0.82),
-            rgba(8, 3, 18, 0.76)
-        );
-
+    background: linear-gradient(145deg, rgba(30, 10, 55, 0.82), rgba(8, 3, 18, 0.76));
     border: 1px solid rgba(168, 85, 247, 0.7);
     border-radius: 18px;
     color: #eee7ff;
     font-size: 15px;
     line-height: 1.5;
     text-align: left;
-
-    box-shadow:
-        0 0 20px rgba(139, 92, 246, 0.22),
-        inset 0 0 20px rgba(124, 58, 237, 0.04);
-
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.22), inset 0 0 20px rgba(124, 58, 237, 0.04);
     animation: messageFloat 3.5s ease-in-out infinite;
 }
 
@@ -670,7 +505,6 @@ a { color: inherit; }
     50% { opacity: 0.35; }
 }
 
-
 /* =========================================================
    ASK FORM & BUTTONS
    ========================================================= */
@@ -701,9 +535,7 @@ a { color: inherit; }
 .ask-form input:focus {
     border-color: #c084fc;
     background: rgba(10, 3, 20, 0.82);
-    box-shadow:
-        0 0 0 3px rgba(139, 92, 246, 0.08),
-        0 0 22px rgba(139, 92, 246, 0.18);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08), 0 0 22px rgba(139, 92, 246, 0.18);
 }
 
 button {
@@ -761,7 +593,6 @@ button:disabled {
     justify-content: center;
 }
 
-
 /* =========================================================
    ANSWERS & CHAT HISTORY
    ========================================================= */
@@ -769,12 +600,7 @@ button:disabled {
 .answer {
     margin: 28px 0;
     padding: 24px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25, 8, 45, 0.65),
-            rgba(7, 2, 16, 0.68)
-        );
+    background: linear-gradient(145deg, rgba(25, 8, 45, 0.65), rgba(7, 2, 16, 0.68));
     border: 1px solid rgba(168, 85, 247, 0.38);
     border-radius: var(--radius);
     box-shadow: 0 0 25px rgba(124, 58, 237, 0.1);
@@ -820,12 +646,7 @@ button:disabled {
 .user-message .message-text {
     max-width: 78%;
     padding: 13px 17px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(109, 40, 217, 0.78),
-            rgba(76, 29, 149, 0.78)
-        );
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.78), rgba(76, 29, 149, 0.78));
     border: 1px solid rgba(192, 132, 252, 0.35);
     border-radius: 16px 16px 4px 16px;
     color: white;
@@ -863,12 +684,7 @@ button:disabled {
 
 .ai-message .message-text {
     padding: 15px 18px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25, 8, 45, 0.68),
-            rgba(7, 2, 17, 0.7)
-        );
+    background: linear-gradient(145deg, rgba(25, 8, 45, 0.68), rgba(7, 2, 17, 0.7));
     border: 1px solid rgba(168, 85, 247, 0.36);
     border-radius: 4px 16px 16px 16px;
     color: #eee7ff;
@@ -878,7 +694,6 @@ button:disabled {
     word-break: break-word;
     overflow-wrap: break-word;
 }
-
 
 /* =========================================================
    QUIZ, RESULTS & DASHBOARD
@@ -894,12 +709,7 @@ button:disabled {
     position: relative;
     margin: 22px 0;
     padding: 24px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25, 8, 45, 0.68),
-            rgba(8, 2, 18, 0.72)
-        );
+    background: linear-gradient(145deg, rgba(25, 8, 45, 0.68), rgba(8, 2, 18, 0.72));
     border: 1px solid rgba(168, 85, 247, 0.35);
     border-radius: 20px;
     box-shadow: 0 0 22px rgba(124, 58, 237, 0.08);
@@ -948,12 +758,7 @@ button:disabled {
     margin: 30px 0;
     padding: 28px;
     text-align: center;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30, 8, 50, 0.7),
-            rgba(8, 2, 18, 0.74)
-        );
+    background: linear-gradient(145deg, rgba(30, 8, 50, 0.7), rgba(8, 2, 18, 0.74));
     border: 1px solid var(--border-bright);
     border-radius: 22px;
     box-shadow: 0 0 35px rgba(124, 58, 237, 0.16);
@@ -1010,10 +815,6 @@ button:disabled {
     gap: 22px;
 }
 
-.typhoon-greeting .typhoon-main {
-    width: 135px;
-}
-
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1025,12 +826,7 @@ button:disabled {
     position: relative;
     padding: 25px;
     min-height: 180px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25, 8, 45, 0.68),
-            rgba(8, 2, 18, 0.72)
-        );
+    background: linear-gradient(145deg, rgba(25, 8, 45, 0.68), rgba(8, 2, 18, 0.72));
     border: 1px solid rgba(168, 85, 247, 0.35);
     border-radius: 20px;
     box-shadow: 0 0 22px rgba(124, 58, 237, 0.09);
@@ -1064,7 +860,6 @@ button:disabled {
     text-shadow: 0 0 16px rgba(155, 92, 255, 0.5);
 }
 
-
 /* =========================================================
    ANIMATIONS & THINKING
    ========================================================= */
@@ -1086,40 +881,15 @@ button:disabled {
     50% { transform: translateY(-6px); }
 }
 
-
+img {
+    max-width: 100%;
+}
 
 /* =========================================================
    RESPONSIVE LAYOUT - LAPTOP, TABLET & MOBILE
    ========================================================= */
 
-/* Fluid sizing for all screen sizes */
-
-.container {
-    width: min(1100px, calc(100% - 40px));
-    padding: clamp(16px, 3vw, 30px);
-}
-
-h1 {
-    font-size: clamp(24px, 4vw, 42px);
-}
-
-.typhoon-main {
-    width: clamp(85px, 12vw, 135px);
-}
-
-.ask-form input {
-    min-width: 0;
-}
-
-img {
-    max-width: 100%;
-}
-
-
-/* TABLETS AND SMALL LAPTOPS */
-
 @media (max-width: 900px) {
-
     .sidebar {
         width: 200px;
         padding: 22px 12px;
@@ -1133,7 +903,6 @@ img {
     .container {
         width: calc(100% - 24px);
         margin: 20px auto;
-        padding: 22px 16px;
     }
 
     .sidebar-typhoon {
@@ -1158,16 +927,10 @@ img {
     }
 }
 
-
-/* MOBILE AND SMALL TABLET */
-
 @media (max-width: 700px) {
-
     .app-layout {
         flex-direction: column;
     }
-
-    /* Mobile navigation */
 
     .sidebar {
         position: relative;
@@ -1220,8 +983,6 @@ img {
         display: none;
     }
 
-    /* Main content */
-
     .main-content {
         width: 100%;
         margin-left: 0;
@@ -1231,19 +992,12 @@ img {
     .container {
         width: 100%;
         margin: 10px auto;
-        padding: 18px 14px;
         border-radius: 20px;
     }
-
-    /* Typhoon header */
 
     .typhoon-top-row {
         flex-direction: column;
         gap: 12px;
-    }
-
-    .typhoon-main {
-        width: 95px;
     }
 
     .typhoon-message {
@@ -1262,23 +1016,15 @@ img {
         transform: translateX(-50%) rotate(45deg);
     }
 
-    /* Chat form */
-
     .ask-form {
         flex-direction: column;
         gap: 10px;
     }
 
-    .ask-form input {
-        width: 100%;
-        padding: 14px;
-    }
-
+    .ask-form input,
     .ask-form button {
         width: 100%;
     }
-
-    /* Chat messages */
 
     .user-message .message-text {
         max-width: 92%;
@@ -1303,8 +1049,6 @@ img {
         font-size: 14px;
     }
 
-    /* Quiz and dashboard */
-
     .question {
         padding: 17px;
     }
@@ -1319,8 +1063,6 @@ img {
         padding: 20px;
     }
 
-    /* Navigation buttons */
-
     .navigation-buttons {
         flex-direction: column;
         gap: 9px;
@@ -1332,15 +1074,7 @@ img {
     }
 }
 
-
-/* EXTRA SMALL PHONES */
-
 @media (max-width: 380px) {
-
-    .container {
-        padding: 14px 10px;
-    }
-
     .sidebar-link {
         padding: 8px;
         font-size: 11px;
@@ -1368,11 +1102,8 @@ img {
     }
 }
 
-
 /* ACCESSIBILITY: REDUCE MOTION */
-
 @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {

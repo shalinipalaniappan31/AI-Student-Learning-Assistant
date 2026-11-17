@@ -6,32 +6,26 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 from google import genai
 import markdown
+
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
 ai_client = genai.Client(api_key=api_key)
 
 mongo_uri = os.getenv("MONGO_URI")
-
 client = MongoClient(mongo_uri)
-
 db = client["ai_student_assistant"]
 
-chat_collection = db["chat_history"]
-quiz_collection = db["quiz_results"]
-
-print("MongoDB Atlas connected!")
 chat_collection = db["chat_history"]
 quiz_collection = db["quiz_results"]
 
 print("MongoDB connected!")
 
 app = Flask(__name__)
-
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
+
 def get_ai_answer(question):
     try:
-
         prompt = f"""
 You are Typhoon, an AI Student Learning Assistant.
 
@@ -52,15 +46,22 @@ Student's question:
         )
 
         return markdown.markdown(
-    response.text,
-    extensions=["fenced_code", "nl2br"]
-)
+            response.text,
+            extensions=["fenced_code", "nl2br"]
+        )
 
     except Exception as e:
-
         print("Gemini API Error:", e)
-
         return "Sorry, I couldn't connect to the AI service right now. Please try again."
+    
+@app.route("/log")
+def log_page():
+    sample_logs = [
+        {"title": "AI Tutoring Session: Calculus Derivatives", "timestamp": "Today, 10:30 AM", "duration": "25m", "status": "Completed"},
+        {"title": "Quiz: Python Functions & Scope", "timestamp": "Yesterday, 4:15 PM", "duration": "15m", "status": "Score: 90%"}
+    ]
+    return render_template('log.html', logs=sample_logs)
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     answer = ""
@@ -71,9 +72,9 @@ def home():
             return redirect(url_for("home"))   
         answer = get_ai_answer(question)
         chat_collection.insert_one({
-    "question": question,
-    "answer": answer
-})
+            "question": question,
+            "answer": answer
+        })
     chat_history = list(chat_collection.find())
 
     return render_template(
@@ -81,6 +82,7 @@ def home():
         answer=answer,
         chat_history=chat_history
     )
+
 @app.route("/clear")
 def clear_history():
     chat_collection.delete_many({})
@@ -88,9 +90,7 @@ def clear_history():
 
 @app.route("/dashboard")
 def dashboard():
-
     chat_count = chat_collection.count_documents({})
-
     quiz_attempts = quiz_collection.count_documents({})
 
     latest_quiz = quiz_collection.find_one(
@@ -109,8 +109,22 @@ def dashboard():
         quiz_attempts=quiz_attempts,
         latest_score=latest_score
     )
-quiz_questions = [
 
+# =========================
+# NEW LOG ROUTE
+# =========================
+@app.route("/log")
+def learning_log():
+    chats = list(chat_collection.find().sort("_id", -1).limit(10))
+    quizzes = list(quiz_collection.find().sort("_id", -1).limit(10))
+    
+    return render_template(
+        "log.html",
+        chats=chats,
+        quizzes=quizzes
+    )
+
+quiz_questions = [
     {
         "question": "What is Python?",
         "options": {
@@ -121,7 +135,6 @@ quiz_questions = [
         },
         "answer": "B"
     },
-
     {
         "question": "What is a loop used for in Python?",
         "options": {
@@ -132,7 +145,6 @@ quiz_questions = [
         },
         "answer": "C"
     },
-
     {
         "question": "What is Flask?",
         "options": {
@@ -143,7 +155,6 @@ quiz_questions = [
         },
         "answer": "A"
     },
-
     {
         "question": "What is MongoDB?",
         "options": {
@@ -154,7 +165,6 @@ quiz_questions = [
         },
         "answer": "D"
     },
-
     {
         "question": "What is an API used for?",
         "options": {
@@ -165,7 +175,6 @@ quiz_questions = [
         },
         "answer": "B"
     },
-
     {
         "question": "What is HTML used for?",
         "options": {
@@ -176,7 +185,6 @@ quiz_questions = [
         },
         "answer": "C"
     },
-
     {
         "question": "What is CSS used for?",
         "options": {
@@ -187,7 +195,6 @@ quiz_questions = [
         },
         "answer": "A"
     },
-
     {
         "question": "What is JavaScript mainly used for?",
         "options": {
@@ -198,7 +205,6 @@ quiz_questions = [
         },
         "answer": "D"
     },
-
     {
         "question": "What is a database?",
         "options": {
@@ -209,7 +215,6 @@ quiz_questions = [
         },
         "answer": "B"
     },
-
     {
         "question": "What does web development involve?",
         "options": {
@@ -220,7 +225,6 @@ quiz_questions = [
         },
         "answer": "C"
     },
-
     {
         "question": "Which keyword is used to define a function in Python?",
         "options": {
@@ -231,7 +235,6 @@ quiz_questions = [
         },
         "answer": "A"
     },
-
     {
         "question": "Which data type stores True or False?",
         "options": {
@@ -242,7 +245,6 @@ quiz_questions = [
         },
         "answer": "D"
     },
-
     {
         "question": "Which symbol is used for a comment in Python?",
         "options": {
@@ -253,7 +255,6 @@ quiz_questions = [
         },
         "answer": "B"
     },
-
     {
         "question": "What does CRUD stand for?",
         "options": {
@@ -264,7 +265,6 @@ quiz_questions = [
         },
         "answer": "C"
     },
-
     {
         "question": "Which HTTP method is commonly used to submit form data?",
         "options": {
@@ -275,28 +275,16 @@ quiz_questions = [
         },
         "answer": "A"
     }
-
 ]
+
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
-
-    result = ""
     score = 0
     feedback = []
 
-    # =========================
-    # START NEW QUIZ
-    # =========================
-
     if request.method == "GET":
-
-        selected_questions = random.sample(
-            quiz_questions,
-            10
-        )
-
+        selected_questions = random.sample(quiz_questions, 10)
         session["quiz_questions"] = selected_questions
-
         return render_template(
             "quiz.html",
             result="",
@@ -305,89 +293,37 @@ def quiz():
             quiz_questions=selected_questions
         )
 
-    # =========================
-    # SUBMIT QUIZ
-    # =========================
-
-    selected_questions = session.get(
-        "quiz_questions",
-        []
-    )
-
-    # Safety check
+    selected_questions = session.get("quiz_questions", [])
     if not selected_questions:
         return redirect(url_for("quiz"))
 
-    for i, question in enumerate(
-        selected_questions,
-        start=1
-    ):
-
-        user_answer = request.form.get(
-            f"answer{i}"
-        )
-
+    for i, question in enumerate(selected_questions, start=1):
+        user_answer = request.form.get(f"answer{i}")
         if user_answer == question["answer"]:
-
             score += 1
-
-            feedback.append(
-                (
-                    "correct",
-                    f"Question {i} - Correct "
-                )
-            )
-
+            feedback.append(("correct", f"Question {i} Correct"))
         else:
-
             correct_answer = question["answer"]
-
-            correct_option = question["options"][
-                correct_answer
-            ]
-
-            feedback.append(
-                (
-                    "wrong",
-                    f"Question {i} - Wrong | "
-                    f"Correct answer: "
-                    f"{correct_answer}. "
-                    f"{correct_option}"
-                )
-            )
+            correct_option = question["options"][correct_answer]
+            feedback.append((
+                "wrong",
+                f"Question {i} Wrong | Correct answer: {correct_answer}. {correct_option}"
+            ))
 
     total_questions = len(selected_questions)
-
-    result = (
-        f"You scored {score} "
-        f"out of {total_questions}"
-    )
-
-    # =========================
-    # SAVE RESULT TO MONGODB
-    # =========================
+    result = f"You scored {score} out of {total_questions}"
 
     quiz_collection.insert_one({
         "score": score,
         "total": total_questions
     })
 
-    # =========================
-    # RESULT MESSAGE
-    # =========================
-
     if score == total_questions:
-
         result += " - Excellent! "
-
     elif score >= total_questions / 2:
-
         result += " - Good job! "
-
     else:
-
         result += " - Keep practicing! "
-
 
     return render_template(
         "quiz.html",
@@ -396,5 +332,6 @@ def quiz():
         feedback=feedback,
         quiz_questions=selected_questions
     )
+
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)
