@@ -127,6 +127,40 @@
                 font-size: 25px;
             }
         }
+                @media(max-width: 480px) {
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            .login-logo {
+                width: 105px;
+                height: 105px;
+            }
+
+            .login-card h1 {
+                font-size: 25px;
+            }
+        }
+
+        /* Register Link */
+
+        .register-link {
+            margin-top: 22px;
+            color: var(--text-soft);
+            font-size: 13px;
+        }
+
+        .register-link a {
+            color: #c084fc;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .register-link a:hover {
+            color: #a855f7;
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -196,6 +230,10 @@
                 </button>
 
             </form>
+            <p class="register-link">
+    Don't have an account?
+    <a href="{{ url_for('register') }}">Create Account</a>
+</p>
 
             <p class="login-footer">
                 Powered by <span>Typhoon AI</span>
