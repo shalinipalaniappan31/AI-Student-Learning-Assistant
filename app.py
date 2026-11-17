@@ -63,7 +63,7 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
         
-        # Store user session and go to chat space
+        # Store user session and redirect to chat space
         session["user_email"] = email
         return redirect(url_for("chat"))
         
