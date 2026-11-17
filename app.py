@@ -53,14 +53,6 @@ Student's question:
     except Exception as e:
         print("Gemini API Error:", e)
         return "Sorry, I couldn't connect to the AI service right now. Please try again."
-    
-@app.route("/log")
-def log_page():
-    sample_logs = [
-        {"title": "AI Tutoring Session: Calculus Derivatives", "timestamp": "Today, 10:30 AM", "duration": "25m", "status": "Completed"},
-        {"title": "Quiz: Python Functions & Scope", "timestamp": "Yesterday, 4:15 PM", "duration": "15m", "status": "Score: 90%"}
-    ]
-    return render_template('log.html', logs=sample_logs)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -110,9 +102,6 @@ def dashboard():
         latest_score=latest_score
     )
 
-# =========================
-# NEW LOG ROUTE
-# =========================
 @app.route("/log")
 def learning_log():
     chats = list(chat_collection.find().sort("_id", -1).limit(10))
