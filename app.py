@@ -122,6 +122,16 @@ def dashboard():
         latest_score=latest_score
     )
 
+# =========================
+# ACTIVITY LOG ROUTE
+# =========================
+
+@app.route("/log")
+def activity_log():
+    logs = []
+
+    return render_template("log.html", logs=logs)
+
 quiz_questions = [
     {
         "question": "What is Python?",
