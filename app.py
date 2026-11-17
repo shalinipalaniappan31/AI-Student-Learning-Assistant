@@ -18,6 +18,7 @@ db = client["ai_student_assistant"]
 
 chat_collection = db["chat_history"]
 quiz_collection = db["quiz_results"]
+users_collection = db["users"]
 
 print("MongoDB connected!")
 
@@ -68,6 +69,11 @@ def login():
         return redirect(url_for("chat"))
         
     return render_template("login.html")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
+
 # =========================
 # MAIN AI CHAT ASSISTANT
 # =========================

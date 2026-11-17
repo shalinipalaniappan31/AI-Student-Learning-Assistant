@@ -1,0 +1,143 @@
+
+/* =====================================
+   TYPHOON - REGISTRATION PAGE
+   PURPLE NEBULA THEME
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top left, #251044, #080313 60%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+/* Main Container */
+
+.register-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Registration Card */
+
+.register-card {
+    background: rgba(20, 10, 38, 0.88);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 22px;
+    padding: 40px 35px;
+    box-shadow: 0 0 35px rgba(124, 58, 237, 0.25);
+    backdrop-filter: blur(15px);
+}
+
+/* Heading */
+
+.register-card h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #c084fc;
+}
+
+.register-card > p {
+    text-align: center;
+    color: #b9a9d1;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Input Groups */
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #e9d5ff;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 13px 15px;
+    background: #10091f;
+    border: 1px solid #392452;
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: #806f96;
+}
+
+.input-group input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+}
+
+/* Create Account Button */
+
+.register-card button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.register-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
+}
+
+/* Login Link */
+
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    color: #b9a9d1;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #c084fc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+
+@media (max-width: 480px) {
+
+    .register-card {
+        padding: 30px 22px;
+    }
+
+    .register-card h1 {
+        font-size: 24px;
+    }
+}
